@@ -54,10 +54,10 @@ class ResNet(nn.Module):
 
         self.apply(_weights_init)
 
-        # student model FeatureAdaptor
-        if self.args.model_type == 'student' and self.args.use_adaptor:
-            self.adaptor = self.build_adaptor()
-            print("Add Student Conv Adaptor layer")
+        # student model FeatureAdapter
+        if self.args.model_type == 'student' and self.args.use_adapter:
+            self.adapter = self.build_adapter()
+            print("Add Student Conv Adapter layer")
 
         # teacher model FeatureQuantizer
         if self.args.model_type == 'teacher' and self.args.QFeatureFlag:
@@ -116,9 +116,9 @@ class ResNet(nn.Module):
             else:
                 print(f"Warning: Last conv layer is not a QConv instance: {type(last_conv)}")
 
-    def build_adaptor(self):
+    def build_adapter(self):
         layers = [nn.Conv2d(64, 64, kernel_size=1, stride=1, padding=0, bias=False)]
-        if self.args.use_adaptor_bn:
+        if self.args.use_adapter_bn:
             layers.append(nn.BatchNorm2d(64))
 
         for m in layers:
@@ -168,7 +168,7 @@ class ResNet(nn.Module):
             if hasattr(last_conv, 'saved_qact') and last_conv.saved_qact is not None:
                 self.qact = last_conv.saved_qact
 
-            fd_map = self.adaptor(self.qact) if self.args.use_adaptor else self.qact
+            fd_map = self.adapter(self.qact) if self.args.use_adapter else self.qact
         
         # Teacher Architecture
         elif self.args.model_type == 'teacher':
