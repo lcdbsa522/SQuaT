@@ -1,4 +1,4 @@
-# SQuaT: Student-Quantized Teacher for Feature Distillation
+# SQuaT: Student-Aware Quantized Teacher Features
 
 Official PyTorch implementation of **SQuaT** — a feature distillation framework that bridges the representation gap between full-precision teachers and quantized students by quantizing teacher features using the student's own quantization parameters.
 
