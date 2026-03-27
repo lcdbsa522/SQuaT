@@ -84,8 +84,8 @@ def main():
     # arguments for feature quantization
     parser.add_argument('--model_type', type=str, default='student', choices=['fp', 'teacher', 'student'], help='training mode: fp model training / teacher model training / knowledge distillation')
     parser.add_argument('--use_student_quant_params', type=str2bool, default=False, help='Enable the use of student quantization parameters during teacher quantization')
-    parser.add_argument('--use_adaptor', type=str2bool, default=False, help='Enable the use of adaptor(connector) for Student')
-    parser.add_argument('--use_adaptor_bn', type=str2bool, default=False, help='whether to use batchnorm in adaptor')
+    parser.add_argument('--use_adapter', type=str2bool, default=False, help='Enable the use of adapter(connector) for Student')
+    parser.add_argument('--use_adapter_bn', type=str2bool, default=False, help='whether to use batchnorm in adapter')
     parser.add_argument('--distill_loss', type=str, default='L1', choices=['L1', 'L2', 'KL_Div', 'Cosine'], help='Feature Distillation Loss type, L1(MAE) or L2(MSE) or KL_Div(Kullback–Leibler divergence)')
 
     # logging and misc
