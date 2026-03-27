@@ -1,0 +1,33 @@
+# CIFAR-10 Configuration for Teacher Model Training (DeiT-Small)
+
+# Dataset settings
+dataset: 'torch/cifar10'
+data_dir: './data/CIFAR10'
+train_split: 'train'
+val_split: 'test'
+num_classes: 10
+
+# Model settings
+model: 'deit_small_distilled_patch16_224'
+model_type: 'deit'
+img_size: 224
+pretrained: true  # Use ImageNet pretrained weights
+
+# Training settings 
+batch_size: 128
+epochs: 20  
+opt: 'adamw'
+lr: 0.0001 
+weight_decay: 0.05
+sched: 'cosine'
+warmup_lr: 0.00001
+min_lr: 0.000001
+warmup_epochs: 2 
+
+# Other settings
+seed: 42
+gpu_id: 0
+workers: 4
+pin_mem: true
+prefetcher: false
+

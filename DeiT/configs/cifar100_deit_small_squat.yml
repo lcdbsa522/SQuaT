@@ -1,0 +1,60 @@
+# CIFAR-100 Configuration for SQuaT (DeiT-Small)
+
+# Dataset settings
+dataset: 'torch/cifar100'
+data_dir: './data/CIFAR100'
+train_split: 'train'
+val_split: 'test'
+num_classes: 100
+
+# Model settings
+model: 'deit_small_distilled_patch16_224'
+model_type: 'deit'
+img_size: 224  
+teacher: 'deit_small_distilled_patch16_224'
+teacher_pretrained: true 
+teacher_checkpoint: ''  # Optional: path to fine-tuned teacher checkpoint
+
+# Training settings
+batch_size: 128
+epochs: 300
+opt: 'adamw'
+lr: 0.001
+weight_decay: 0.05
+sched: 'cosine'
+warmup_lr: 0.0001
+min_lr: 0.00001
+warmup_epochs: 10
+
+# Quantization settings 
+wq_mode: 'statsq'
+wq_bitw: 2
+aq_enable: true
+aq_mode: 'lsq'
+aq_bitw: 2
+qmodules: ['blocks']
+qk_reparam: false
+
+# SQuaT settings
+use_squat: true
+QFeatureFlag: true
+feature_levels: 2
+use_adaptor: false
+use_adaptor_bn: false
+use_student_quant_params: true
+distill_token_mode: 'all_tokens'  # Token selection: 'cls_only' or 'all_tokens'
+
+# Knowledge Distillation settings
+kd_T: 4.0
+kd_alpha: 0.0
+kd_beta: 1.0
+kd_gamma: 1.0
+feature_distill_loss_type: 'L2'
+
+# Other settings
+seed: 42
+gpu_id: 0
+workers: 4
+pin_mem: true
+prefetcher: false
+

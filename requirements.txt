@@ -1,0 +1,26 @@
+# SQuaT unified requirements
+# Covers: BERT, CIFAR, DeiT, ImageNet
+# Python >= 3.6
+
+# Core deep learning
+torch<=2.7.1
+torchvision<=0.22.1
+
+# Vision Transformer (DeiT)
+timm==0.4.12
+
+# Numerics & data
+numpy<=1.26.4
+scipy<=1.13
+pillow<=11.0.0
+
+# NLP / BERT
+scikit-learn<=1.5
+
+# Utilities
+tqdm<=4.67.1
+pyyaml
+tensorboard
+
+# Experiment tracking (BERT)
+neptune<=1.12
