@@ -10,7 +10,7 @@
 # Bit-width: W1A1, W3A3, W4A4, W8A8
 
 # Usage: ./run_SQuaT.sh BIT_LEVEL
-# Example: ./run_SQuaT.sh W1A1
+# Example: ./run_SQuaT.sh "SQuaT/W1A1/"
 #########################################################################################################
 
 set -e
@@ -25,7 +25,7 @@ BIT_LEVEL=$1
 echo "Bit Levels: $BIT_LEVEL"
 
 # W1A1 (Weight: 2 levels, Act: 2 levels, Feature: 2 levels)
-if [ "$BIT_LEVEL" == "W1A1" ]
+if [ "$BIT_LEVEL" == "SQuaT/W1A1/" ]
 then
     python ImageNet_train_quant.py --gpu 0 \
                                 --visible_gpus '0' \
@@ -62,7 +62,7 @@ then
                                 --resume './results/ResNet18/SQuaT/W1A1/checkpoint.pth.tar'
 
 # W3A3 (Weight: 8 levels, Act: 8 levels, Feature: 8 levels)
-elif [ "$BIT_LEVEL" == "W3A3" ]
+elif [ "$BIT_LEVEL" == "SQuaT/W3A3/" ]
 then
     python ImageNet_train_quant.py --gpu 0 \
                                 --visible_gpus '0' \
@@ -98,7 +98,7 @@ then
                                 --resume './results/ResNet18/SQuaT/W3A3/checkpoint.pth.tar'
 
 # W4A4 (Weight: 16 levels, Act: 16 levels, Feature: 16 levels)
-elif [ "$BIT_LEVEL" == "W4A4" ]
+elif [ "$BIT_LEVEL" == "SQuaT/W4A4/" ]
 then
     python ImageNet_train_quant.py --gpu 0 \
                                 --visible_gpus '0' \
@@ -134,7 +134,7 @@ then
                                 --resume './results/ResNet18/SQuaT/W4A4/checkpoint.pth.tar'
 
 # W8A8 (Weight: 256 levels, Act: 256 levels, Feature: 256 levels)
-elif [ "$BIT_LEVEL" == "W8A8" ]
+elif [ "$BIT_LEVEL" == "SQuaT/W8A8/" ]
 then
     python ImageNet_train_quant.py --gpu 0 \
                                 --visible_gpus '0' \

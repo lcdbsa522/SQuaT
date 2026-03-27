@@ -10,7 +10,7 @@
 # Bit-width: W1A1, W2A2, W4A4
 
 # Usage: ./run_cifar100_resnet32_squat.sh METHOD_TYPE
-# Example: ./run_cifar100_resnet32_squat.sh W1A1
+# Example: ./run_cifar100_resnet32_squat.sh "SQuaT/W1A1/"
 #########################################################################################################
 
 set -e
@@ -78,8 +78,8 @@ then
                                 --kd_gamma 1.0 \
                                 --pretrain_path './results/CIFAR100_ResNet32/fp/checkpoint/best_checkpoint.pth' \
                                 --teacher_path './results/CIFAR100_ResNet32/fp/checkpoint/best_checkpoint.pth' \
-                                --log_dir "./results/CIFAR100_ResNet32/${METHOD_TYPE}" \
-                                --resume "./results/CIFAR100_ResNet32/${METHOD_TYPE}/checkpoint/last_checkpoint.pth"
+                                --log_dir './results/CIFAR100_ResNet32/SQuaT/W1A1/' \
+                                --resume './results/CIFAR100_ResNet32/SQuaT/W1A1/checkpoint/last_checkpoint.pth'
 
 # W2A2 (Weight: 4 levels, Act: 4 levels, Feature: 4 levels)
 elif [ "$METHOD_TYPE" == "SQuaT/W2A2/" ]
@@ -117,8 +117,8 @@ then
                                 --kd_gamma 1.0 \
                                 --pretrain_path './results/CIFAR100_ResNet32/fp/checkpoint/best_checkpoint.pth' \
                                 --teacher_path './results/CIFAR100_ResNet32/fp/checkpoint/best_checkpoint.pth' \
-                                --log_dir "./results/CIFAR100_ResNet32/${METHOD_TYPE}" \
-                                --resume "./results/CIFAR100_ResNet32/${METHOD_TYPE}/checkpoint/last_checkpoint.pth"
+                                --log_dir './results/CIFAR100_ResNet32/SQuaT/W2A2/' \
+                                --resume './results/CIFAR100_ResNet32/SQuaT/W2A2/checkpoint/last_checkpoint.pth'
 
 # W4A4 (Weight: 16 levels, Act: 16 levels, Feature: 16 levels)
 elif [ "$METHOD_TYPE" == "SQuaT/W4A4/" ]
@@ -156,8 +156,8 @@ then
                                 --kd_gamma 1.0 \
                                 --pretrain_path './results/CIFAR100_ResNet32/fp/checkpoint/best_checkpoint.pth' \
                                 --teacher_path './results/CIFAR100_ResNet32/fp/checkpoint/best_checkpoint.pth' \
-                                --log_dir "./results/CIFAR100_ResNet32/${METHOD_TYPE}" \
-                                --resume "./results/CIFAR100_ResNet32/${METHOD_TYPE}/checkpoint/last_checkpoint.pth"
+                                --log_dir './results/CIFAR100_ResNet32/SQuaT/W4A4/' \
+                                --resume './results/CIFAR100_ResNet32/SQuaT/W4A4/checkpoint/last_checkpoint.pth'
                                 
 
 end=$(date +%s)
