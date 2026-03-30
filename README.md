@@ -2,12 +2,6 @@
 
 This repository is the official implementation of **"SQuaT: Self-Supervised Knowledge Distillation via Student-Aware Quantized Teacher Features"** (AISTATS 2026) by [HyeonJun Lee*](https://github.com/lcdbsa522), [Hyeonsik Jo*](https://github.com/hsjo827), Jinwoo Chung, and [Jangho Kim†](https://github.com/Jangho-Kim)
 
-## Overview
-
-Low-bit quantization significantly reduces model size and inference cost, but the accuracy gap between full-precision and quantized models remains a challenge. Traditional knowledge distillation methods suffer from a **representation gap** — the teacher produces full-precision features while the student operates in a quantized space, making direct feature matching suboptimal.
-
-**SQuaT** addresses this by introducing a *Student-Quantized Teacher*: the teacher's intermediate features are quantized using the student's learned quantization parameters before distillation. This ensures both teacher and student features reside in a compatible representation space, leading to more effective knowledge transfer.
-
 ![figure_2](https://github.com/user-attachments/assets/24ab6be2-61a5-4dfb-afba-8408f3d4523b)
 
 ## Installation
