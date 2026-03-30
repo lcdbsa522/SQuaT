@@ -1,12 +1,6 @@
-# SQuaT: Student-Aware Quantized Teacher Features
+# SQuaT
 
-Official PyTorch implementation of **SQuaT** — a feature distillation framework that bridges the representation gap between full-precision teachers and quantized students by quantizing teacher features using the student's own quantization parameters.
-
-<!-- If you have a paper link, uncomment and fill in:
-> **[Paper Title](https://arxiv.org/abs/xxxx.xxxxx)**  
-> Author1, Author2, ...  
-> *Conference/Journal, Year*
--->
+This repository is the official implementation of **"SQuaT: Self-Supervised Knowledge Distillation via Student-Aware Quantized Teacher Features"** (AISTATS 2026) by [HyeonJun Lee*](https://github.com/lcdbsa522), [Hyeonsik Jo*](https://github.com/hsjo827), Jinwoo Chung, and [Jangho Kim†](https://github.com/Jangho-Kim)
 
 ## Overview
 
@@ -14,119 +8,52 @@ Low-bit quantization significantly reduces model size and inference cost, but th
 
 **SQuaT** addresses this by introducing a *Student-Quantized Teacher*: the teacher's intermediate features are quantized using the student's learned quantization parameters before distillation. This ensures both teacher and student features reside in a compatible representation space, leading to more effective knowledge transfer.
 
-### Key Features
-
-- **Feature-level distillation** with quantization-aware teacher representations
-- **Hessian-based gradient scaling** (EWGS) for improved quantization-aware training
-- Support for **ultra-low bit-widths** (1-bit, 2-bit weights and activations)
-- Experiments across **4 domains**: CIFAR, ImageNet, DeiT (Vision Transformer), and BERT (NLP)
-
-## Project Structure
-
-```
-SQuaT/
-├── CIFAR/          # ResNet / VGG on CIFAR-10, CIFAR-100
-├── ImageNet/       # ResNet-18 on ILSVRC2012
-├── DeiT/           # DeiT (Vision Transformer) quantization
-├── BERT/           # BERT quantization on GLUE tasks
-├── requirements.txt
-└── README.md
-```
+![figure_2](https://github.com/user-attachments/assets/24ab6be2-61a5-4dfb-afba-8408f3d4523b)
 
 ## Installation
 
 ```bash
-git clone https://github.com/<your-username>/SQuaT.git
-cd SQuaT
+conda create -n squat python=3.10 -y
+conda activate squat
 pip install -r requirements.txt
 ```
 
-> **Note**: PyTorch with CUDA support should be installed separately based on your environment.  
-> See [PyTorch installation guide](https://pytorch.org/get-started/locally/).
+## Training
 
-## Quick Start
-
-### CIFAR (ResNet-20, W1A1)
+### CIFAR (ResNet-20, 32 / DeiT)
 
 ```bash
-cd CIFAR
+# ResNet
+cd CIFAR/ResNet
+bash ./scripts/run_cifar10_resnet20_squat.sh "fp/"
+bash ./scripts/run_cifar10_resnet20_squat.sh "SQuaT/W1A1/"
 
-# 1. Train full-precision model
-python train_fp.py --dataset cifar10 --arch resnet20_fp
-
-# 2. Train quantized student with SQuaT distillation
-python train_quant_distill.py \
-    --dataset cifar10 \
-    --arch resnet20_quant \
-    --teacher_arch resnet20_fp \
-    --distill fd \
-    --weight_levels 2 --act_levels 2 \
-    --QFeatureFlag True \
-    --load_pretrain True \
-    --pretrain_path ./results/CIFAR10_ResNet20/fp/checkpoint/last_checkpoint.pth \
-    --teacher_path ./results/CIFAR10_ResNet20/fp/checkpoint/last_checkpoint.pth
+# DeiT (Vision Transformer)
+cd CIFAR/DeiT
+bash scripts/train_teacher.sh --dataset cifar100 --model-size tiny
+bash scripts/train_squat.sh --dataset cifar100 --model-size tiny --bit 4
 ```
 
 ### ImageNet (ResNet-18)
 
 ```bash
 cd ImageNet
-
-python ImageNet_train_quant.py \
-    --data /path/to/ILSVRC2012 \
-    --arch resnet18_quant \
-    --teacher_arch resnet18_fp \
-    --distill_type fd \
-    --weight_levels 2 --act_levels 2 \
-    --QFeatureFlag True
+bash ./scripts/run_SQuaT.sh "SQuaT/W1A1/"
 ```
 
-### DeiT (Vision Transformer)
+### GLUE (BERT)
+Download the datasets and FP weights from [GLUE](https://gluebenchmark.com/) and [HuggingFace](https://huggingface.co/JeremiahZ), then place them in the `data/` and `models/` folders within the `GLUE` directory.
 
 ```bash
-cd DeiT
-
-python train_squat.py \
-    --data_dir /path/to/imagenet \
-    --model deit_tiny_patch16_224 \
-    --teacher deit_tiny_patch16_224 \
-    --teacher-pretrained \
-    --use-squat \
-    --wq-enable --wq-bitw 2 \
-    --aq-enable --aq-bitw 2 \
-    --QFeatureFlag
+cd GLUE
+# Usage 
+bash train_squat.sh <task_name> <bert_size> <bit> <gpu_ids> [num_gpus]
+# Example
+bash train_squat.sh "rte" "base" “3” "0" 1
 ```
-
-### BERT (GLUE Tasks)
-
-```bash
-cd BERT
-
-python main.py \
-    --task_name sst-2 \
-    --weight_bits 2 --input_bits 8 \
-    --squat_distill True
-```
-
-## Method
-
-<p align="center"><i>SQuaT quantizes teacher features using the student's quantization parameters, aligning both into a shared representation space for effective feature distillation.</i></p>
-
-1. **Student model**: Weights and activations are quantized to low bit-widths via EWGS
-2. **Teacher model**: Full-precision model whose intermediate features are extracted
-3. **Feature quantization**: Teacher features are quantized using the student's learned quantization parameters (step sizes)
-4. **Feature distillation**: The quantized teacher features are matched with the student's quantized features via L1/L2/KL loss
-
-## Requirements
-
-- Python ≥ 3.6
-- PyTorch (see `requirements.txt` for full details)
-- CUDA-capable GPU
 
 ## Citation
-
-<!--
-If you find this work useful, please cite:
+Please refer to the following citation if this repository is useful for your research.
 
 ```bibtex
 @inproceedings{squat2025,
@@ -136,12 +63,3 @@ If you find this work useful, please cite:
   year={}
 }
 ```
--->
-
-## Acknowledgements
-
-This codebase builds upon [EWGS](https://github.com/cvlab-yonsei/EWGS) for quantization-aware training.
-
-## License
-
-<!-- Specify your license here -->
