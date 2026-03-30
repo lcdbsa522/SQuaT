@@ -24,8 +24,8 @@ bash ./scripts/run_cifar10_resnet20_squat.sh "SQuaT/W1A1/"
 
 # DeiT (Vision Transformer)
 cd CIFAR/DeiT
-bash scripts/train_teacher.sh --dataset cifar100 --model-size tiny
-bash scripts/train_squat.sh --dataset cifar100 --model-size tiny --bit 4
+bash ./scripts/train_teacher.sh --dataset cifar100 --model-size tiny
+bash ./scripts/train_squat.sh --dataset cifar100 --model-size tiny --bit 4
 ```
 
 ### ImageNet (ResNet-18)
