@@ -50,10 +50,12 @@ bash train_squat.sh "rte" "base" “3” "0" 1
 Please refer to the following citation if this repository is useful for your research.
 
 ```bibtex
-@inproceedings{squat2025,
-  title={},
-  author={},
-  booktitle={},
-  year={}
+@inproceedings{
+  lee2026squat,
+  title={{SQ}uaT: Self-Supervised Knowledge Distillation via Student-Aware Quantized Teacher Features},
+  author={HyeonJun Lee and Hyeonsik Jo and Jinwoo Chung and Jangho Kim},
+  booktitle={The 29th International Conference on Artificial Intelligence and Statistics},
+  year={2026},
+  url={https://openreview.net/forum?id=E1rZnlgy6O}
 }
 ```
